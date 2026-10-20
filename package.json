@@ -10,6 +10,7 @@
     "tailwind",
     "vite"
   ],
+  "license": "MIT",
   "homepage": "https://felton.github.io/quiet-on-set/",
   "repository": {
     "type": "git",
