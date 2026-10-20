@@ -1,0 +1,22 @@
+{
+  "name": "create-quiet-on-set",
+  "version": "0.1.0",
+  "description": "Start a new project from the quiet-on-set template: pnpm create quiet-on-set my-app",
+  "keywords": ["create", "template", "react-router", "shadcn", "tailwind", "vite"],
+  "homepage": "https://felton.github.io/quiet-on-set/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felton/create-quiet-on-set.git"
+  },
+  "type": "module",
+  "bin": {
+    "create-quiet-on-set": "index.mjs"
+  },
+  "files": ["index.mjs"],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node --test
+
+  create:
+    # A real run against GitHub: latest release, download, unpack, setup.
+    # Windows checks that its built-in tar unpacks the tarball.
+    name: Create a project (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node index.mjs ${{ runner.temp }}/app --name "CI Site" --yes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Check the result
+        shell: bash
+        working-directory: ${{ runner.temp }}/app
+        run: |
+          test -f TEMPLATE_VERSION
+          test ! -e scripts/make-it-yours.mjs
+          grep -q '"name": "ci-site"' package.json

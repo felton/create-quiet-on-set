@@ -1,0 +1,43 @@
+name: Release
+
+# release-please keeps a release PR up to date from Conventional Commits.
+# Merging it tags the release, and the publish job pushes it to npm.
+# Publishing uses npm trusted publishing (OIDC), so there's no npm token:
+# configure it on npmjs.com under the package's Settings → Trusted publishing.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@v5
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: node --test
+      - run: npm publish --provenance --access public
