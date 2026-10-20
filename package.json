@@ -1,6 +1,6 @@
 {
   "name": "create-quiet-on-set",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Start a new project from the quiet-on-set template: pnpm create quiet-on-set my-app",
   "keywords": [
     "create",
