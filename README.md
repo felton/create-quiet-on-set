@@ -32,3 +32,7 @@ pnpm create quiet-on-set my-app --name "Bakery Co" --description "Fresh bread da
 Releases from v1.2.0 on are supported, since that's the first with `make-it-yours`.
 
 Docs: [felton.github.io/quiet-on-set](https://felton.github.io/quiet-on-set/)
+
+## License
+
+[MIT](LICENSE)
